@@ -48,7 +48,7 @@ app.get('/quotes', (req, res) => {
 });
 
 // 404 handler
-app.use('*', (req, res) => {
+app.use((req, res) => {
     res.status(404).json({
         error: 'Endpoint not found',
         message: 'Please check the available endpoints at the root URL'
