@@ -1,0 +1,17 @@
+{
+  "name": "random-quotes-server",
+  "version": "1.0.0",
+  "description": "A Node.js server that returns random quotes from a JSON file",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["quotes", "api", "express", "nodejs"],
+  "author": "awatattor-alt",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
