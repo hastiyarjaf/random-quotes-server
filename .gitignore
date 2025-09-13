@@ -38,3 +38,10 @@ logs
 
 # Runtime cache
 .cache/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+temp-quotes.json
