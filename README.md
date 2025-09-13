@@ -149,13 +149,24 @@ GEMINI_MODEL=gemini-1.5-flash
 
 ### 🤖 Setting up Gemini AI
 
-1. Visit [Google AI Studio](https://aistudio.google.com)
+You can enable AI-powered chat responses using Google Gemini.
+
+Steps:
+1. Visit Google AI Studio: https://aistudio.google.com/app/apikey
 2. Sign in with your Google account
 3. Create a new API key
-4. Add the API key to your `.env` file as `GEMINI_API_KEY`
-5. The app will automatically use AI responses instead of fallback quotes
+4. Add the key to your .env file as `GEMINI_API_KEY`
+5. Optional: ensure `AI_PROVIDER=gemini` and (optionally) set `GEMINI_MODEL=gemini-1.5-flash`
+6. Restart the backend server
 
-**Note**: The app works perfectly without an API key using intelligent fallback responses!
+Quick .env example (AI section):
+```env
+AI_PROVIDER=gemini
+GEMINI_API_KEY=your_api_key_here
+GEMINI_MODEL=gemini-1.5-flash
+```
+
+Note: The app works perfectly without an API key using intelligent fallback responses.
 
 ## 📖 API Reference
 
