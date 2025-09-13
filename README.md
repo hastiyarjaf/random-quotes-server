@@ -1,3 +1,5 @@
+[![CI/CD Pipeline](https://github.com/hastiyarjaf/random-quotes-server/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/hastiyarjaf/random-quotes-server/actions/workflows/ci.yml)
+
 # Random Quotes - AI Wisdom 🌟
 
 A polished, deploy-ready full-stack application featuring an extensive quotes collection and an AI-powered chatbot that speaks English, Arabic, and Sorani Kurdish. Built with modern technologies and designed for accessibility and multilingual support.
