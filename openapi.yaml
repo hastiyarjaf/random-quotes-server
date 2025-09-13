@@ -1,0 +1,355 @@
+openapi: 3.0.3
+info:
+  title: Random Quotes API
+  description: A comprehensive quotes API with AI-powered chat functionality supporting multiple languages
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@example.com
+  license:
+    name: ISC
+servers:
+  - url: http://localhost:3000
+    description: Development server
+  - url: https://api.yourapp.com
+    description: Production server
+
+paths:
+  /health:
+    get:
+      summary: Health check endpoint
+      description: Returns the server health status and basic statistics
+      tags:
+        - System
+      responses:
+        '200':
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  timestamp:
+                    type: string
+                    format: date-time
+                  quotes:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 42
+                  environment:
+                    type: string
+                    example: development
+                  version:
+                    type: string
+                    example: 1.0.0
+
+  /api/v1/quote:
+    get:
+      summary: Get random quote
+      description: Returns a single random quote from the collection
+      tags:
+        - Quotes
+      responses:
+        '200':
+          description: Random quote retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  quote:
+                    $ref: '#/components/schemas/Quote'
+                  timestamp:
+                    type: string
+                    format: date-time
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/quotes:
+    get:
+      summary: Get quotes with pagination and search
+      description: Returns a paginated list of quotes with optional search functionality
+      tags:
+        - Quotes
+      parameters:
+        - name: contains
+          in: query
+          description: Search term to filter quotes by text or author
+          required: false
+          schema:
+            type: string
+            example: "life"
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+            example: 1
+        - name: limit
+          in: query
+          description: Number of quotes per page (max 100)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+            example: 10
+      responses:
+        '200':
+          description: Quotes retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  quotes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Quote'
+                  total:
+                    type: integer
+                    description: Total number of quotes matching the criteria
+                    example: 42
+                  page:
+                    type: integer
+                    example: 1
+                  limit:
+                    type: integer
+                    example: 10
+                  totalPages:
+                    type: integer
+                    example: 5
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/quotes/{id}:
+    get:
+      summary: Get quote by ID
+      description: Returns a specific quote by its unique identifier
+      tags:
+        - Quotes
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the quote
+          required: true
+          schema:
+            type: string
+            example: "abc123def"
+      responses:
+        '200':
+          description: Quote found and returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  quote:
+                    $ref: '#/components/schemas/Quote'
+        '404':
+          description: Quote not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/chat:
+    post:
+      summary: AI-powered chat endpoint
+      description: Send a message to the AI assistant for quotes and wisdom-related conversations
+      tags:
+        - AI Chat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  maxLength: 1000
+                  description: User message to send to the AI
+                  example: "Can you share a quote about perseverance?"
+                language:
+                  type: string
+                  enum: [en, ar, ckb]
+                  default: en
+                  description: Preferred language for the response (en=English, ar=Arabic, ckb=Sorani Kurdish)
+                  example: "en"
+                history:
+                  type: array
+                  maxItems: 10
+                  description: Previous conversation history for context
+                  items:
+                    type: object
+                    required:
+                      - role
+                      - content
+                    properties:
+                      role:
+                        type: string
+                        enum: [user, assistant]
+                        description: Role of the message sender
+                      content:
+                        type: string
+                        description: Message content
+                  example:
+                    - role: user
+                      content: "Hello"
+                    - role: assistant
+                      content: "Hello! How can I help you with quotes today?"
+      responses:
+        '200':
+          description: Chat response generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: AI-generated response message
+                    example: "Here's an inspiring quote about perseverance..."
+                  language:
+                    type: string
+                    enum: [en, ar, ckb]
+                    description: Language of the response
+                    example: "en"
+                  direction:
+                    type: string
+                    enum: [ltr, rtl]
+                    description: Text direction for proper UI rendering
+                    example: "ltr"
+                  provider:
+                    type: string
+                    enum: [gemini, fallback, openai, azure]
+                    description: AI provider used for the response
+                    example: "gemini"
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Response timestamp
+                  quote:
+                    $ref: '#/components/schemas/Quote'
+                    description: Included when fallback provider is used
+                  fallback:
+                    type: boolean
+                    description: True if fallback response was used due to AI service unavailability
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Validation failed"
+                  message:
+                    type: string
+                    example: "Invalid request parameters"
+                  details:
+                    type: array
+                    items:
+                      type: string
+                    example: ["Message is required and must be a non-empty string"]
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Quote:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the quote
+          example: "abc123def"
+        text:
+          type: string
+          description: The quote text
+          example: "The only way to do great work is to love what you do."
+        author:
+          type: string
+          description: Author of the quote
+          example: "Steve Jobs"
+      required:
+        - id
+        - text
+        - author
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error type
+          example: "Internal server error"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "Something went wrong"
+      required:
+        - error
+        - message
+
+    RateLimitError:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error type
+          example: "Too many requests"
+        message:
+          type: string
+          description: Rate limit error message
+          example: "You have exceeded the rate limit. Please try again later."
+      required:
+        - error
+        - message
+
+  securitySchemes: {}
+
+tags:
+  - name: System
+    description: System health and status endpoints
+  - name: Quotes
+    description: Quote management and retrieval
+  - name: AI Chat
+    description: AI-powered chat functionality

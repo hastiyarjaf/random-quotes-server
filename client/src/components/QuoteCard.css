@@ -1,0 +1,280 @@
+.quote-card {
+  background: var(--card-background);
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-large);
+  padding: var(--spacing-xl);
+  margin: var(--spacing-md) 0;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.quote-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.04);
+}
+
+.quote-card.featured {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+  padding: var(--spacing-xl) var(--spacing-xl);
+  max-width: 700px;
+  margin: var(--spacing-xl) auto;
+}
+
+.quote-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.quote-text {
+  font-size: var(--font-size-xl);
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-md);
+  font-style: italic;
+  position: relative;
+}
+
+.quote-card.featured .quote-text {
+  font-size: var(--font-size-2xl);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-lg);
+}
+
+.quote-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.quote-author {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--primary-color);
+  font-style: normal;
+}
+
+.quote-card.featured .quote-author {
+  font-size: var(--font-size-xl);
+}
+
+.quote-id {
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+  background: rgba(108, 92, 231, 0.1);
+  padding: 2px var(--spacing-xs);
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.quote-actions {
+  margin-top: var(--spacing-lg);
+  text-align: center;
+}
+
+.quote-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.quote-mark {
+  position: absolute;
+  font-size: 4rem;
+  font-weight: 700;
+  color: rgba(108, 92, 231, 0.1);
+  font-family: Georgia, serif;
+  line-height: 1;
+  user-select: none;
+}
+
+.quote-mark-open {
+  top: var(--spacing-sm);
+  left: var(--spacing-sm);
+}
+
+.quote-mark-close {
+  bottom: var(--spacing-sm);
+  right: var(--spacing-sm);
+  transform: rotate(180deg);
+}
+
+.quote-card.featured .quote-mark {
+  font-size: 6rem;
+  color: rgba(108, 92, 231, 0.08);
+}
+
+.quote-card.featured .quote-mark-open {
+  top: 0;
+  left: var(--spacing-md);
+}
+
+.quote-card.featured .quote-mark-close {
+  bottom: 0;
+  right: var(--spacing-md);
+}
+
+.quote-card-loading,
+.quote-card-error {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--text-secondary);
+}
+
+.quote-card-loading p,
+.quote-card-error p {
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+}
+
+.quote-card-error {
+  color: var(--text-light);
+}
+
+.quote-card-error .button {
+  margin-top: var(--spacing-md);
+}
+
+/* Animation for featured cards */
+.quote-card.featured {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .quote-card {
+    padding: var(--spacing-lg);
+    margin: var(--spacing-sm) 0;
+  }
+  
+  .quote-card.featured {
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) var(--spacing-sm);
+  }
+  
+  .quote-text {
+    font-size: var(--font-size-lg);
+  }
+  
+  .quote-card.featured .quote-text {
+    font-size: var(--font-size-xl);
+  }
+  
+  .quote-author {
+    font-size: var(--font-size-base);
+  }
+  
+  .quote-card.featured .quote-author {
+    font-size: var(--font-size-lg);
+  }
+  
+  .quote-mark {
+    font-size: 3rem;
+  }
+  
+  .quote-card.featured .quote-mark {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .quote-card {
+    padding: var(--spacing-md);
+  }
+  
+  .quote-card.featured {
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) var(--spacing-xs);
+  }
+  
+  .quote-text {
+    font-size: var(--font-size-base);
+  }
+  
+  .quote-card.featured .quote-text {
+    font-size: var(--font-size-lg);
+  }
+  
+  .quote-footer {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  .quote-mark {
+    font-size: 2.5rem;
+  }
+  
+  .quote-card.featured .quote-mark {
+    font-size: 3rem;
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] .quote-footer {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .quote-mark-open {
+  right: var(--spacing-sm);
+  left: auto;
+}
+
+[dir="rtl"] .quote-mark-close {
+  left: var(--spacing-sm);
+  right: auto;
+}
+
+[dir="rtl"] .quote-card.featured .quote-mark-open {
+  right: var(--spacing-md);
+  left: auto;
+}
+
+[dir="rtl"] .quote-card.featured .quote-mark-close {
+  left: var(--spacing-md);
+  right: auto;
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+  .quote-card {
+    border: 2px solid var(--text-primary);
+    background: white;
+  }
+  
+  .quote-mark {
+    color: rgba(45, 55, 72, 0.2);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .quote-card {
+    transition: none;
+    animation: none;
+  }
+  
+  .quote-card:hover {
+    transform: none;
+  }
+}
