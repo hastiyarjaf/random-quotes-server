@@ -45,3 +45,6 @@ coverage/
 
 # Temporary files
 temp-quotes.json
+
+# Build artifacts
+client/dist/

@@ -8,7 +8,7 @@
     "dev": "nodemon index.js",
     "test": "jest --forceExit",
     "test:watch": "jest --watch",
-    "lint": "eslint . --ext .js --ignore-path .gitignore"
+    "lint": "eslint . --ext .js"
   },
   "keywords": ["quotes", "api", "express", "nodejs"],
   "author": "awatattor-alt",
