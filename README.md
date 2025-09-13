@@ -97,6 +97,32 @@ A polished, deploy-ready full-stack application featuring an extensive quotes co
    - Backend API: http://localhost:3000
    - API Documentation: http://localhost:3000/docs
 
+### 📄 Environment Configuration
+
+The project includes example environment files to help you get started quickly:
+
+- **`.env.example`** - Server configuration with rate limits, AI provider settings, and CORS
+- **`client/.env.example`** - Frontend configuration for API base URL
+
+**Setup:**
+```bash
+# Copy server environment template
+cp .env.example .env
+
+# Copy client environment template (if needed)
+cp client/.env.example client/.env
+
+# Edit the files with your specific configuration
+```
+
+### 📚 API Documentation
+
+The API includes comprehensive OpenAPI documentation available at `/docs`:
+- **Interactive Swagger UI**: http://localhost:3000/docs
+- **OpenAPI Spec**: Available at repository root as `openapi.yaml`
+- **Supported Languages**: English, Arabic, and Sorani Kurdish
+- **Rate Limiting**: Built-in protection with configurable limits
+
 ### 🐳 Docker Setup
 
 1. **Quick start with Docker Compose**
