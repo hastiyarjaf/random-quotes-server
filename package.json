@@ -8,6 +8,8 @@
     "dev": "nodemon index.js",
     "test": "jest --forceExit",
     "test:watch": "jest --watch",
+    "test:api": "jest --forceExit tests/api.test.js",
+    "test:ci": "jest --forceExit tests/api.test.js",
     "lint": "eslint . --ext .js"
   },
   "keywords": ["quotes", "api", "express", "nodejs"],
